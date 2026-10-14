@@ -1,14 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { ProtectedLayout } from './TungTungTung/components/ProtectedLayout'
-import { AccountEdit, AccountsPage } from './TungTungTung/pages/AccountPages'
-import { AuthPage, RegisterPage } from './TungTungTung/pages/AuthPages'
-import { DashboardPage } from './TungTungTung/pages/DashboardPage'
-import { InventoryPage } from './TungTungTung/pages/InventoryPage'
-import { LogsPage } from './TungTungTung/pages/LogsPage'
-import { DeleteProduct, ProductForm, StockForm } from './TungTungTung/pages/ProductPages'
-import './TungTungTung/ReactApp.css'
+import { ProtectedLayout } from './components/ProtectedLayout'
+import { AccountEdit, AccountsPage } from './pages/AccountPages'
+import { AuthPage, RegisterPage } from './pages/AuthPages'
+import { DashboardPage } from './pages/DashboardPage'
+import { InventoryPage } from './pages/InventoryPage'
+import { LogsPage } from './pages/LogsPage'
+import { DeleteProduct, ProductForm, StockForm } from './pages/ProductPages'
+import './ReactApp.css'
 
 function App() {
     return <BrowserRouter basename="/stock"><Routes>

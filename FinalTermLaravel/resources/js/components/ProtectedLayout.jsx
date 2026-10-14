@@ -22,9 +22,19 @@ export function ProtectedLayout() {
   if (status === 'error') return <div className="loading-screen">Could not connect to the inventory service. Check the Laravel database and reload.</div>
   return <div className={`app-layout ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
     <aside className="sidebar" aria-label="Main navigation">
-      <div className="sidebar__controls"><div className="brand-mark">SF</div><div className="brand-copy"><strong>Streetfood</strong><span>Stock management</span></div><button className="sidebar__toggle" type="button" title="Collapse sidebar" aria-label="Collapse sidebar" onClick={() => setSidebarOpen(false)}><i className="fa-solid fa-bars" /></button></div>
+      <div className="sidebar__controls">
+        <div className="brand-mark">SF</div>
+        <div className="brand-copy">
+          <strong>Streetfood</strong>
+          <span>Stock management</span>
+        </div>
+        <button className="sidebar__toggle" type="button" title="Collapse sidebar" aria-label="Collapse sidebar" onClick={() => setSidebarOpen(false)}>
+          <i className="fa-solid fa-bars" />
+        </button>
+      </div>
       <hr />
-      <nav><span className="nav-caption">WORKSPACE</span>
+      <nav>
+        <span className="nav-caption">WORKSPACE</span>
         <NavLink to="/" end className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}><i className="fa-solid fa-chart-line" />Dashboard</NavLink>
         <NavLink to="/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}><i className="fa-solid fa-boxes-stacked" />Inventory</NavLink>
         <NavLink to="/logs" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}><i className="fa-solid fa-clock-rotate-left" />Transaction logs</NavLink>
