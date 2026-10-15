@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\AccountDataController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('api/process')->middleware(['auth', 'role:Admin'])->group(function () {
+Route::prefix('api/process')->middleware('auth')->group(function () {
     Route::get('accounts', [AccountDataController::class, 'index'])->name('accounts.index');
     Route::apiResource('accounts', AccountDataController::class)->only(['index', 'update', 'destroy']);
 

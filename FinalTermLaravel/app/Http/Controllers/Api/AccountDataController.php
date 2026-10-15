@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Models\Role;
+use App\Models\User;
 
 class AccountDataController
 {
@@ -68,12 +70,16 @@ class AccountDataController
             'last_login' => ['nullable', 'date'],
         ]);
 
-        DB::table('users')->where('id', $values['id'])->update([
+        $user = User::findOrFail($values['id']);
+        $role = Role::findOrFail($values['role_id']);
+
+        $user->forceFill([
             'username' => trim($values['username']),
             'email' => trim($values['email']),
             'role_id' => $values['role_id'],
             'last_login' => $values['last_login'] ?? null,
-        ]);
+        ])->save();
+        $user->syncRoles($role);
 
         return response()->json(['success' => true, 'message' => 'Account updated successfully.']);
     }

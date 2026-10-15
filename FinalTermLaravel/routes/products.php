@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\InventoryActionController;
 use App\Http\Controllers\Api\InventoryDataController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('api/process')->middleware(['auth', 'role:Admin'])->group(function () {
+Route::prefix('api/process')->middleware('auth')->group(function () {
     Route::get('products', [InventoryDataController::class, 'index'])->name('products.index');
     Route::apiResource('products', InventoryActionController::class)->only(['store', 'update', 'destroy']);
 

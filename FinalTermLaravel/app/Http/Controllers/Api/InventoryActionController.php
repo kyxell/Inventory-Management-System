@@ -14,6 +14,10 @@ class InventoryActionController
 {
     public function store(Request $request): JsonResponse
     {
+        if (!$this->isAdmin()) {
+            return response()->json(['success' => false, 'error' => 'Forbidden - Admin access required.'], 403);
+        }
+
         $values = $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string'],
@@ -110,6 +114,10 @@ class InventoryActionController
 
     private function adjustStock(Request $request, bool $import): JsonResponse
     {
+        if (!$this->isAdmin()) {
+            return response()->json(['success' => false, 'error' => 'Forbidden - Admin access required.'], 403);
+        }
+
         $values = $request->validate([
             'id' => ['required', 'integer', 'exists:products,id'],
             'quantity' => ['required', 'integer', 'min:1'],

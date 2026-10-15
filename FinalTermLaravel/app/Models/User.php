@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -81,6 +82,27 @@ class User extends Authenticatable
             $user->role_id ??= 2;
             $user->is_active ??= true;
             $user->password_hash ??= $user->password;
+        });
+
+        static::created(function (self $user) {
+            if ($user->roles()->count() > 0) {
+                return;
+            }
+
+            $roleName = match ((int) ($user->role_id ?? 2)) {
+                1 => 'Admin',
+                3 => 'Manager',
+                default => 'User',
+            };
+
+            $role = SpatieRole::firstOrCreate([
+                'name' => $roleName,
+                'guard_name' => 'web',
+            ]);
+
+            $user->assignRole($role);
+            $user->role_id = $role->id;
+            $user->saveQuietly();
         });
     }
 

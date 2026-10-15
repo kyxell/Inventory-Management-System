@@ -72,7 +72,7 @@ class AuthController
         }
 
         $passwordHash = Hash::make($request->input('password'));
-        User::create([
+        $user = User::create([
             'username' => trim($request->input('username')),
             'email' => trim($request->input('email')),
             'password_hash' => $passwordHash,
@@ -83,6 +83,8 @@ class AuthController
             'role_id' => 2,
             'is_active' => true,
         ]);
+
+        $user->assignRole('User');
 
         return response()->json([
             'success' => true,
