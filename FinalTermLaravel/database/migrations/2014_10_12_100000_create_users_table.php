@@ -23,8 +23,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-
-            $table->foreign('role_id')->references('id')->on('roles')->nullOnDelete();
         });
     }
 
