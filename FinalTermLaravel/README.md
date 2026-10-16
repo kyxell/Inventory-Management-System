@@ -21,7 +21,7 @@ npm run dev
 php artisan serve
 ```
 
-The compatibility migrations preserve existing inventory tables and add Laravel's session/auth support. Role `1` is administrator and role `2` is staff. The test suite uses an isolated in-memory SQLite database.
+The migrations create the application's user, inventory, and role/permission tables; Laravel sessions use the configured file driver. On a fresh database, roles are seeded as `1: Admin`, `2: Manager`, and `3: User`.
 
 ## About Laravel
 

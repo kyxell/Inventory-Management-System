@@ -69,7 +69,7 @@ export function LogsPage() {
               </tr>
             </thead>
             <tbody>{logs.map((log) => <tr key={log.id}>
-              <td>{formatDate(log.created_at)}</td>
+              <td>{log.created_at ? formatDate(log.created_at) : 'Not recorded'}</td>
               <td>{log.product_name}</td>
               <td>{log.category_name}</td>
               <td><span className={`badge ${log.direction === 'in' ? 'bg-success' : 'bg-danger'}`}>{log.direction === 'in' ? 'Stock in' : 'Stock out'}</span></td>
