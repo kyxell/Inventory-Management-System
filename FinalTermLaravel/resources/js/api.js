@@ -7,7 +7,7 @@ export class ApiError extends Error {
   }
 }
 
-export async function request(path, options = {}) {
+export async function request(path, options = {}, retryAfterCsrfRefresh = true) {
   const { headers = {}, ...fetchOptions } = options
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
   const response = await fetch(`${apiRoot}/${path}`, {
@@ -19,6 +19,20 @@ export async function request(path, options = {}) {
     },
     ...fetchOptions,
   })
+
+  if (response.status === 419 && retryAfterCsrfRefresh) {
+    const tokenResponse = await fetch(`${apiRoot}/csrf-token`, {
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' },
+    })
+    const tokenData = await tokenResponse.json()
+    const csrfMeta = document.querySelector('meta[name="csrf-token"]')
+
+    if (tokenResponse.ok && tokenData.csrfToken && csrfMeta) {
+      csrfMeta.content = tokenData.csrfToken
+      return request(path, options, false)
+    }
+  }
 
   const responseBody = await response.text()
   let data

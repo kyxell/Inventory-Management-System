@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/stock');
 
 Route::prefix('api/process')->group(function () {
+    Route::get('csrf-token', fn () => response()->json(['csrfToken' => csrf_token()]));
     Route::post('login_process.php', [AuthController::class, 'login']);
     Route::post('register_process.php', [AuthController::class, 'register']);
     Route::post('logout_process.php', [AuthController::class, 'logout'])->middleware('auth');
